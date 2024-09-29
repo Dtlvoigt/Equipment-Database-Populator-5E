@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentDatabasePopulator5E.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    [Migration("20240929051421_Init")]
+    [Migration("20240929202509_Init")]
     partial class Init
     {
         /// <inheritdoc />
