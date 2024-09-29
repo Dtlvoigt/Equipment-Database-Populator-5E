@@ -126,8 +126,15 @@ namespace EquipmentDatabasePopulator5E
     {
         public EquipmentContext CreateDbContext(string[] args)
         {
+            var configurationBuilder = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.json")
+               .Build();
+
+            string connectionString = configurationBuilder.GetConnectionString("DefaultConnection");
+
             var optionsBuilder = new DbContextOptionsBuilder<EquipmentContext>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-TQ85C4M;Database=RPGInventoryManager;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer(connectionString);
 
             return new EquipmentContext(optionsBuilder.Options);
         }
