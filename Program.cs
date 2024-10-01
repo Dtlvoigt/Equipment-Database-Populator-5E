@@ -5,7 +5,7 @@ namespace EquipmentDatabasePopulator5E
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //Set up the configuration to read from appsettings.json
             var configurationBuilder = new ConfigurationBuilder()
@@ -18,7 +18,6 @@ namespace EquipmentDatabasePopulator5E
             //IConfigurationRoot configuration = configurationBuilder.Build();
             string connectionString = configurationBuilder.GetConnectionString("DefaultConnection");
 
-
             // Set up DbContext options
             var optionsBuilder = new DbContextOptionsBuilder<EquipmentContext>()
                 .UseSqlServer(connectionString);
@@ -26,13 +25,12 @@ namespace EquipmentDatabasePopulator5E
 
             using (var context = new EquipmentContext(optionsBuilder.Options))
             {
+                //create database from migration files
+                //context.Database.EnsureDeleted();
                 context.Database.Migrate();
-                // Your database operations here
-                //LoadService(context);
-                //var service = new EquipmentService();
-                //await service.LoadEquipment();
 
-                //var service = new EquipmentService();
+                //begin database operations
+                await LoadService(context);
             }
         }
 
@@ -57,9 +55,11 @@ namespace EquipmentDatabasePopulator5E
         //    return new ApplicationDbContext(optionsBuilder.Options);
         //}
 
-        void LoadService(EquipmentContext context)
+        static async Task LoadService(EquipmentContext context)
         {
+            var service = new EquipmentService(context);
 
+            await service.LoadEquipment();
         }
     }
 }
