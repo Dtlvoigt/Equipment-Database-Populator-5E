@@ -70,6 +70,10 @@ namespace EquipmentDatabasePopulator5E
                         }
                     }
                 }
+
+                //insert equipment into database
+                await _context.Equipment.AddRangeAsync(equipmentList);
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {
