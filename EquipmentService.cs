@@ -95,6 +95,13 @@ namespace EquipmentDatabasePopulator5E
                     var document = JsonDocument.Parse(json);
                     var root = document.RootElement.GetProperty("results");
                     categories = JsonSerializer.Deserialize<List<EquipmentCategory>>(root);
+
+                    //insert equipment into database
+                    if (categories != null)
+                    {
+                        await _context.Categories.AddRangeAsync(categories);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
             catch (Exception e)
