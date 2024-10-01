@@ -24,9 +24,19 @@ namespace EquipmentDatabasePopulator5E
 
             using (var context = new EquipmentContext(optionsBuilder.Options))
             {
+                //remove tables from database
+                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS EquipmentVariants");
+                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS EquipmentWeaponProperties");
+                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS PackContents");
+                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Equipment");
+                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Categories");
+                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS WeaponProperties");
+
                 //create database from migration files
-                //context.Database.EnsureDeleted();
-                context.Database.Migrate();
+                //await context.Database.MigrateAsync();
+
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
                 //begin database operations
                 await LoadService(context);
