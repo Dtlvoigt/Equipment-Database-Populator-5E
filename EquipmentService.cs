@@ -1,4 +1,4 @@
-﻿using DnD_5E_Equipment_Database_Populator.Models;
+﻿using EquipmentDatabasePopulator5E.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,17 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace DnD_5E_Equipment_Database_Populator
+namespace EquipmentDatabasePopulator5E
 {
     public class EquipmentService
     {
+        private readonly EquipmentContext _context; 
+
+        public EquipmentService(EquipmentContext context) 
+        {
+            _context = context;
+        }
+
         public async Task LoadEquipment()
         {
             try
