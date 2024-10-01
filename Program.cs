@@ -7,21 +7,20 @@ namespace EquipmentDatabasePopulator5E
     {
         static async Task Main(string[] args)
         {
-            //Set up the configuration to read from appsettings.json
+            //set up configuration to read from appsettings.json
             var configurationBuilder = new ConfigurationBuilder()
                .SetBasePath(Directory.GetCurrentDirectory())
                .AddJsonFile("appsettings.json")
                .Build();
             //.Build();
 
-            // Retrieve the connection string
+            //retrieve connection string
             //IConfigurationRoot configuration = configurationBuilder.Build();
             string connectionString = configurationBuilder.GetConnectionString("DefaultConnection");
 
             // Set up DbContext options
             var optionsBuilder = new DbContextOptionsBuilder<EquipmentContext>()
                 .UseSqlServer(connectionString);
-            //Program p = new Program();
 
             using (var context = new EquipmentContext(optionsBuilder.Options))
             {
@@ -59,7 +58,10 @@ namespace EquipmentDatabasePopulator5E
         {
             var service = new EquipmentService(context);
 
+            await service.LoadEquipmentCategories();
+            await service.LoadWeaponProperties();
             await service.LoadEquipment();
+            await service.LoadMagicEquipment();
         }
     }
 }
