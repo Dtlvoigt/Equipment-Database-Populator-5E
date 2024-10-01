@@ -70,7 +70,7 @@ namespace EquipmentDatabasePopulator5E.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RangeCategory")
                         .HasColumnType("nvarchar(max)");
@@ -128,6 +128,10 @@ namespace EquipmentDatabasePopulator5E.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
+
                     b.ToTable("Equipment");
                 });
 
@@ -141,10 +145,13 @@ namespace EquipmentDatabasePopulator5E.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
@@ -210,10 +217,13 @@ namespace EquipmentDatabasePopulator5E.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("WeaponProperties");
                 });

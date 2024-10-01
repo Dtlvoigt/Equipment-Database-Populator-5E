@@ -16,7 +16,7 @@ namespace EquipmentDatabasePopulator5E.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +29,7 @@ namespace EquipmentDatabasePopulator5E.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MagicItem = table.Column<bool>(type: "bit", nullable: true),
@@ -73,7 +73,7 @@ namespace EquipmentDatabasePopulator5E.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -149,6 +149,19 @@ namespace EquipmentDatabasePopulator5E.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipment_Name",
+                table: "Equipment",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EquipmentVariants_VariantId",
                 table: "EquipmentVariants",
                 column: "VariantId");
@@ -162,6 +175,12 @@ namespace EquipmentDatabasePopulator5E.Migrations
                 name: "IX_PackContents_ContentId",
                 table: "PackContents",
                 column: "ContentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WeaponProperties_Name",
+                table: "WeaponProperties",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />

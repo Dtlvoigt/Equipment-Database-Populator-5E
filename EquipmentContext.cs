@@ -27,6 +27,19 @@ namespace EquipmentDatabasePopulator5E
         {
             base.OnModelCreating(modelBuilder);
 
+            //make name values unique so that duplicate records don't get inserted
+            modelBuilder.Entity<Equipment>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<EquipmentCategory>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
+            
+            modelBuilder.Entity<WeaponProperty>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
+
             //define the composite key and foreign keys for EquipmentVariants
             modelBuilder.Entity<EquipmentVariant>()
                 .HasKey(e => new { e.EquipmentId, e.VariantId });
@@ -77,6 +90,7 @@ namespace EquipmentDatabasePopulator5E
         }
     }
 
+    //this dbContextFactory gets used when creating migrations manually
     public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<EquipmentContext>
     {
         public EquipmentContext CreateDbContext(string[] args)
