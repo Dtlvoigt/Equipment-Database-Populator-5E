@@ -72,8 +72,13 @@ namespace EquipmentDatabasePopulator5E
                 }
 
                 //insert equipment into database
+                if (equipmentList != null && equipmentList.Count > 0)
+                {
                 await _context.Equipment.AddRangeAsync(equipmentList);
                 await _context.SaveChangesAsync();
+                    Console.WriteLine("Equipment added to database.\n");
+                }
+                
             }
             catch (Exception e)
             {
@@ -101,6 +106,7 @@ namespace EquipmentDatabasePopulator5E
                     {
                         await _context.Categories.AddRangeAsync(categories);
                         await _context.SaveChangesAsync();
+                        Console.WriteLine("\nEquipment Categories added to database.\n");
                     }
                 }
             }
@@ -147,6 +153,7 @@ namespace EquipmentDatabasePopulator5E
                 {
                     await _context.Equipment.AddRangeAsync(magicEquipmentList);
                     await _context.SaveChangesAsync();
+                    Console.WriteLine("Magic equipment added to database.\n");
                 }
             }
             catch (Exception e)
@@ -217,6 +224,7 @@ namespace EquipmentDatabasePopulator5E
                 {
                     await _context.WeaponProperties.AddRangeAsync(weaponProperties);
                     await _context.SaveChangesAsync();
+                    Console.WriteLine("Weapon Properties added to database.\n");
                 }
             }
             catch (Exception e)
