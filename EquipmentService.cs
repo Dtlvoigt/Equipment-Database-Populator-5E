@@ -141,6 +141,13 @@ namespace EquipmentDatabasePopulator5E
                         }
                     }
                 }
+
+                //insert magic equipment into database
+                if (magicEquipmentList != null && magicEquipmentList.Count > 0)
+                {
+                    await _context.Equipment.AddRangeAsync(magicEquipmentList);
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (Exception e)
             {
