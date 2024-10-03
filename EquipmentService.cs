@@ -74,8 +74,8 @@ namespace EquipmentDatabasePopulator5E
                 //insert equipment into database
                 if (equipmentList != null && equipmentList.Count > 0)
                 {
-                await _context.Equipment.AddRangeAsync(equipmentList);
-                await _context.SaveChangesAsync();
+                    await _context.Equipment.AddRangeAsync(equipmentList);
+                    await _context.SaveChangesAsync();
                     Console.WriteLine("Equipment added to database.\n");
                 }
                 
@@ -276,6 +276,7 @@ namespace EquipmentDatabasePopulator5E
         {
             equipment.MagicItem = true;
             equipment.Name = equipmentLoader.Name;
+            equipment.URL = equipmentLoader.URL;
             equipment.Category = ParseStringField(equipmentLoader.CategoryElement, "name");
             equipment.Rarity = ParseStringField(equipmentLoader.RarityElement, "name");
             equipment.IsVariant = equipmentLoader.IsVariant;
