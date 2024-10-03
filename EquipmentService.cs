@@ -96,7 +96,7 @@ namespace EquipmentDatabasePopulator5E
                     var root = document.RootElement.GetProperty("results");
                     categories = JsonSerializer.Deserialize<List<EquipmentCategory>>(root);
 
-                    //insert equipment into database
+                    //insert categories into database
                     if (categories != null)
                     {
                         await _context.Categories.AddRangeAsync(categories);
@@ -203,6 +203,13 @@ namespace EquipmentDatabasePopulator5E
                             weaponProperties.Add(newWeaponProperty);
                         }
                     }
+                }
+
+                //insert weapon properties into database
+                if (weaponProperties != null && weaponProperties.Count > 0)
+                {
+                    await _context.WeaponProperties.AddRangeAsync(weaponProperties);
+                    await _context.SaveChangesAsync();
                 }
             }
             catch (Exception e)
