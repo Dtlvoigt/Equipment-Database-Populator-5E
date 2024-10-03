@@ -139,7 +139,7 @@ namespace EquipmentDatabasePopulator5E
                         //set magic item properties
                         newEquipment = ParseMagicItem(equipmentLoader, newEquipment);
 
-                        //exception for potion of healing
+                        //special case for potion of healing. Two items have the same name but must be unique
                         if(newEquipment.Name == "Potion of Healing" && newEquipment.IsVariant == false)
                         {
                             newEquipment.Name = "Potion of Healing (Unclassified)";
