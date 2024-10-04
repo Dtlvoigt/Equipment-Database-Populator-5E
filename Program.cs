@@ -33,8 +33,8 @@ namespace EquipmentDatabasePopulator5E
                 //create database from migration files
                 //await context.Database.MigrateAsync();
 
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                //context.Database.EnsureDeleted();
+                //context.Database.EnsureCreated();
 
                 //begin database operations
                 await LoadService(context);
@@ -45,10 +45,17 @@ namespace EquipmentDatabasePopulator5E
         {
             var service = new EquipmentService(context);
 
-            await service.LoadEquipmentCategories();
-            await service.LoadWeaponProperties();
-            await service.LoadEquipment();
-            await service.LoadMagicEquipment();
+            //load equipment information into database
+            //await service.LoadEquipmentCategories();
+            //await service.LoadWeaponProperties();
+            //await service.LoadEquipment();
+            //await service.LoadMagicEquipment();
+
+            //create relationship tables
+            await service.CreateMagicVariantsRelationships();
+            //await service.CreatePackContentRelationships();
+            //await service.CreateWeaponPropertyRelationships();
+
         }
     }
 }
