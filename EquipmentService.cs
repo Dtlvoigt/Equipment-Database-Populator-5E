@@ -1,4 +1,5 @@
 ﻿using EquipmentDatabasePopulator5E.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
@@ -359,10 +360,16 @@ namespace EquipmentDatabasePopulator5E
         public async Task CreateMagicVariantsRelationships()
         {
             //load magic items with variants
+            var baseVariants = new List<Equipment>();
+            baseVariants = await _context.Equipment.AsNoTracking().Where(e => e.HasVariant).ToListAsync();
+
             //load magic items that are variants
+            var variants = new List<Equipment>();
+            variants = await _context.Equipment.AsNoTracking().Where(e => e.IsVariant).ToListAsync();
+
             //load item data from the API
 
-            //create relationship object and insert into db
+            //create relationship objects and insert into db
         }
 
         public async Task CreatePackContentRelationships()
