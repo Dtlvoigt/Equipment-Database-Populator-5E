@@ -359,6 +359,10 @@ namespace EquipmentDatabasePopulator5E
 
         public async Task CreateMagicVariantsRelationships()
         {
+            try
+            {
+                var equipmentVariants = new List<EquipmentVariant>();
+
             //load magic items with variants
             var baseVariants = new List<Equipment>();
             baseVariants = await _context.Equipment.AsNoTracking().Where(e => e.HasVariant).ToListAsync();
@@ -381,7 +385,14 @@ namespace EquipmentDatabasePopulator5E
                 }
             }
 
-            //create relationship objects and insert into db
+                //insert into db
+                await _context.AddRangeAsync(equipmentVariants);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public async Task CreatePackContentRelationships()
