@@ -363,27 +363,46 @@ namespace EquipmentDatabasePopulator5E
             {
                 var equipmentVariants = new List<EquipmentVariant>();
 
-            //load magic items with variants
-            var baseVariants = new List<Equipment>();
-            baseVariants = await _context.Equipment.AsNoTracking().Where(e => e.HasVariant).ToListAsync();
+                //load magic items with variants
+                var baseVariants = new List<Equipment>();
+                baseVariants = await _context.Equipment.AsNoTracking().Where(e => e.HasVariant).ToListAsync();
 
-            //load magic items that are variants
-            var variants = new List<Equipment>();
-            variants = await _context.Equipment.AsNoTracking().Where(e => e.IsVariant).ToListAsync();
+                //load magic items that are variants
+                var variants = new List<Equipment>();
+                variants = await _context.Equipment.AsNoTracking().Where(e => e.IsVariant).ToListAsync();
 
-            //load item data from the API
-            var httpClient = new HttpClient();
-            foreach (var baseItem in baseVariants)
-            {
-                var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + baseItem.URL);
-                if (response.IsSuccessStatusCode)
+                //load item data from the API
+                var httpClient = new HttpClient();
+                foreach (var baseItem in baseVariants)
                 {
-                    //create equipment loader
-                    var json = await response.Content.ReadAsStringAsync();
-                    var document = JsonDocument.Parse(json);
-                    var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
+                    var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + baseItem.URL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //create equipment loader
+                        var json = await response.Content.ReadAsStringAsync();
+                        var document = JsonDocument.Parse(json);
+                        var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
+
+                        //extract all variant names from API data
+                        var variantNames = new List<string>();
+                        foreach (var variantElement in equipmentLoader.VariantsElement.EnumerateArray())
+                        {
+                            variantNames.Add(ParseStringField(variantElement, "name"));
+                        }
+
+                        //create relationship objects
+                        foreach (var variantName in variantNames)
+                        {
+                            var variantID = variants.First(v => v.Name == variantName).Id;
+                            var newEquipmentVariant = new EquipmentVariant()
+                            {
+                                EquipmentId = baseItem.Id,
+                                VariantId = variantID
+                            };
+                            equipmentVariants.Add(newEquipmentVariant);
+                        }
+                    }
                 }
-            }
 
                 //insert into db
                 await _context.AddRangeAsync(equipmentVariants);
