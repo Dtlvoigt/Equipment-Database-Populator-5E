@@ -368,6 +368,18 @@ namespace EquipmentDatabasePopulator5E
             variants = await _context.Equipment.AsNoTracking().Where(e => e.IsVariant).ToListAsync();
 
             //load item data from the API
+            var httpClient = new HttpClient();
+            foreach (var baseItem in baseVariants)
+            {
+                var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + baseItem.URL);
+                if (response.IsSuccessStatusCode)
+                {
+                    //create equipment loader
+                    var json = await response.Content.ReadAsStringAsync();
+                    var document = JsonDocument.Parse(json);
+                    var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
+                }
+            }
 
             //create relationship objects and insert into db
         }
