@@ -13,9 +13,9 @@ namespace EquipmentDatabasePopulator5E
 {
     public class EquipmentService
     {
-        private readonly EquipmentContext _context; 
+        private readonly EquipmentContext _context;
 
-        public EquipmentService(EquipmentContext context) 
+        public EquipmentService(EquipmentContext context)
         {
             _context = context;
         }
@@ -79,7 +79,7 @@ namespace EquipmentDatabasePopulator5E
                     await _context.SaveChangesAsync();
                     Console.WriteLine("Equipment added to database.\n");
                 }
-                
+
             }
             catch (Exception e)
             {
@@ -141,7 +141,7 @@ namespace EquipmentDatabasePopulator5E
                         newEquipment = ParseMagicItem(equipmentLoader, newEquipment);
 
                         //special case for potion of healing. Two items have the same name but must be unique
-                        if(newEquipment.Name == "Potion of Healing" && newEquipment.IsVariant == false)
+                        if (newEquipment.Name == "Potion of Healing" && newEquipment.IsVariant == false)
                         {
                             newEquipment.Name = "Potion of Healing (Unclassified)";
                         }
@@ -286,7 +286,7 @@ namespace EquipmentDatabasePopulator5E
             equipment.Description = string.Join("; ", equipmentLoader.DescriptionElement.EnumerateArray().Select(d => d.GetString()));
 
             //check if item has any variants
-            if(equipmentLoader.VariantsElement.ValueKind == JsonValueKind.Array)
+            if (equipmentLoader.VariantsElement.ValueKind == JsonValueKind.Array)
             {
                 equipment.HasVariant = equipmentLoader.VariantsElement.EnumerateArray().Any();
             }
@@ -317,7 +317,7 @@ namespace EquipmentDatabasePopulator5E
             var speedAmount = ParseDoubleField(equipmentLoader.SpeedElement, "quantity");
             var speedUnit = ParseStringField(equipmentLoader.SpeedElement, "unit");
             equipment.Speed = speedAmount + " " + speedUnit;
-                              
+
             return equipment;
         }
 
@@ -445,7 +445,7 @@ namespace EquipmentDatabasePopulator5E
 
         private int ParseIntField(JsonElement jsonElement, string propertyName)
         {
-            if(jsonElement.ValueKind == JsonValueKind.Undefined || jsonElement.ValueKind == JsonValueKind.Null)
+            if (jsonElement.ValueKind == JsonValueKind.Undefined || jsonElement.ValueKind == JsonValueKind.Null)
             {
                 return 0;
             }
