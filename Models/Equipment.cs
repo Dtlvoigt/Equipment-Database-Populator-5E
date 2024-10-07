@@ -82,6 +82,9 @@ namespace EquipmentDatabasePopulator5E.Models
         //public string? Variants {  get; set; }
         public bool IsVariant { get; set; }
         public bool HasVariant { get; set; }
-        public ICollection<EquipmentVariant>? Variants { get; set; }
+        public int? ParentEquipmentId { get; set; }
+        public Equipment? ParentEquipment { get; set; }
+        public ICollection<Equipment>? Variants { get; set; }
+        //public ICollection<EquipmentVariant>? Variants { get; set; }
     }
 }
