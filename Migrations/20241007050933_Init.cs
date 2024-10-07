@@ -60,11 +60,18 @@ namespace EquipmentDatabasePopulator5E.Migrations
                     Speed = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rarity = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsVariant = table.Column<bool>(type: "bit", nullable: false),
-                    HasVariant = table.Column<bool>(type: "bit", nullable: false)
+                    HasVariant = table.Column<bool>(type: "bit", nullable: false),
+                    ParentEquipmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Equipment_Equipment_ParentEquipmentId",
+                        column: x => x.ParentEquipmentId,
+                        principalTable: "Equipment",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,28 +86,6 @@ namespace EquipmentDatabasePopulator5E.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WeaponProperties", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EquipmentVariants",
-                columns: table => new
-                {
-                    EquipmentId = table.Column<int>(type: "int", nullable: false),
-                    VariantId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EquipmentVariants", x => new { x.EquipmentId, x.VariantId });
-                    table.ForeignKey(
-                        name: "FK_EquipmentVariants_Equipment_EquipmentId",
-                        column: x => x.EquipmentId,
-                        principalTable: "Equipment",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_EquipmentVariants_Equipment_VariantId",
-                        column: x => x.VariantId,
-                        principalTable: "Equipment",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -162,9 +147,9 @@ namespace EquipmentDatabasePopulator5E.Migrations
                 filter: "[Name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EquipmentVariants_VariantId",
-                table: "EquipmentVariants",
-                column: "VariantId");
+                name: "IX_Equipment_ParentEquipmentId",
+                table: "Equipment",
+                column: "ParentEquipmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EquipmentWeaponProperties_WeaponPropertyId",
@@ -188,9 +173,6 @@ namespace EquipmentDatabasePopulator5E.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "EquipmentVariants");
 
             migrationBuilder.DropTable(
                 name: "EquipmentWeaponProperties");

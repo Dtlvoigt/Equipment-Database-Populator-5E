@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentDatabasePopulator5E.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    [Migration("20241001200258_Init")]
+    [Migration("20241007050933_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -75,6 +75,9 @@ namespace EquipmentDatabasePopulator5E.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("ParentEquipmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("RangeCategory")
                         .HasColumnType("nvarchar(max)");
 
@@ -135,6 +138,8 @@ namespace EquipmentDatabasePopulator5E.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL");
 
+                    b.HasIndex("ParentEquipmentId");
+
                     b.ToTable("Equipment");
                 });
 
@@ -157,21 +162,6 @@ namespace EquipmentDatabasePopulator5E.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("EquipmentDatabasePopulator5E.Models.EquipmentVariant", b =>
-                {
-                    b.Property<int>("EquipmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VariantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EquipmentId", "VariantId");
-
-                    b.HasIndex("VariantId");
-
-                    b.ToTable("EquipmentVariants");
                 });
 
             modelBuilder.Entity("EquipmentDatabasePopulator5E.Models.EquipmentWeaponProperty", b =>
@@ -231,23 +221,14 @@ namespace EquipmentDatabasePopulator5E.Migrations
                     b.ToTable("WeaponProperties");
                 });
 
-            modelBuilder.Entity("EquipmentDatabasePopulator5E.Models.EquipmentVariant", b =>
+            modelBuilder.Entity("EquipmentDatabasePopulator5E.Models.Equipment", b =>
                 {
-                    b.HasOne("EquipmentDatabasePopulator5E.Models.Equipment", "Equipment")
+                    b.HasOne("EquipmentDatabasePopulator5E.Models.Equipment", "ParentEquipment")
                         .WithMany("Variants")
-                        .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("ParentEquipmentId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("EquipmentDatabasePopulator5E.Models.Equipment", "Variant")
-                        .WithMany()
-                        .HasForeignKey("VariantId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Equipment");
-
-                    b.Navigation("Variant");
+                    b.Navigation("ParentEquipment");
                 });
 
             modelBuilder.Entity("EquipmentDatabasePopulator5E.Models.EquipmentWeaponProperty", b =>
