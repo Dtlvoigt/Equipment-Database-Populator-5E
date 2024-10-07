@@ -52,10 +52,11 @@ namespace EquipmentDatabasePopulator5E
             //await service.LoadMagicEquipment();
 
             //create relationship tables
-            await service.CreateMagicVariantsRelationships();
+            //await service.CreateMagicVariantsRelationships();
             //await service.CreatePackContentRelationships();
             //await service.CreateWeaponPropertyRelationships();
 
+            var variants = await context.EquipmentVariants.Include(e => e.Equipment).ThenInclude(e => e.Variants).ThenInclude(e => e.Variant).ToListAsync();
         }
     }
 }
