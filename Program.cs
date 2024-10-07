@@ -5,6 +5,8 @@ namespace EquipmentDatabasePopulator5E
 {
     class Program
     {
+        public static bool rebuildDb = true;
+
         static async Task Main(string[] args)
         {
             //set up configuration to read from appsettings.json
@@ -33,8 +35,11 @@ namespace EquipmentDatabasePopulator5E
                 //create database from migration files
                 //await context.Database.MigrateAsync();
 
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                if (rebuildDb)
+                {
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
+                }
 
                 //begin database operations
                 await LoadService(context);
@@ -45,17 +50,20 @@ namespace EquipmentDatabasePopulator5E
         {
             var service = new EquipmentService(context);
 
-            //load equipment information into database
-            await service.LoadEquipmentCategories();
-            await service.LoadWeaponProperties();
-            await service.LoadEquipment();
-            await service.LoadMagicEquipment();
+            if (rebuildDb)
+            {
+                //load equipment information into database
+                await service.LoadEquipmentCategories();
+                await service.LoadWeaponProperties();
+                await service.LoadEquipment();
+                await service.LoadMagicEquipment();
 
 
                 //create relationship tables and references
                 await service.CreateVariantsReferences();
-            //await service.CreatePackContentRelationships();
-            //await service.CreateWeaponPropertyRelationships();
+                //await service.CreatePackContentRelationships();
+                //await service.CreateWeaponPropertyRelationships();
+            }
 
             var equipment = await context.Equipment.Include(e => e.Variants).ToListAsync();
             //var variants = await context.EquipmentVariants.Include(e => e.Equipment).ThenInclude(e => e.Variants).ThenInclude(e => e.Variant).ToListAsync();
