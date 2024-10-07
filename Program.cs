@@ -33,8 +33,8 @@ namespace EquipmentDatabasePopulator5E
                 //create database from migration files
                 //await context.Database.MigrateAsync();
 
-                //context.Database.EnsureDeleted();
-                //context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
                 //begin database operations
                 await LoadService(context);
@@ -46,17 +46,18 @@ namespace EquipmentDatabasePopulator5E
             var service = new EquipmentService(context);
 
             //load equipment information into database
-            //await service.LoadEquipmentCategories();
-            //await service.LoadWeaponProperties();
-            //await service.LoadEquipment();
-            //await service.LoadMagicEquipment();
+            await service.LoadEquipmentCategories();
+            await service.LoadWeaponProperties();
+            await service.LoadEquipment();
+            await service.LoadMagicEquipment();
 
             //create relationship tables
-            //await service.CreateMagicVariantsRelationships();
+            await service.CreateMagicVariantsRelationships();
             //await service.CreatePackContentRelationships();
             //await service.CreateWeaponPropertyRelationships();
 
-            var variants = await context.EquipmentVariants.Include(e => e.Equipment).ThenInclude(e => e.Variants).ThenInclude(e => e.Variant).ToListAsync();
+            var equipment = await context.Equipment.Include(e => e.Variants).ToListAsync();
+            //var variants = await context.EquipmentVariants.Include(e => e.Equipment).ThenInclude(e => e.Variants).ThenInclude(e => e.Variant).ToListAsync();
         }
     }
 }
