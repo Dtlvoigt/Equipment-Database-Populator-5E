@@ -9,8 +9,8 @@ namespace EquipmentDatabasePopulator5E.Models
 {
     public class EquipmentVariant
     {
-        public required int EquipmentId { get; set; }
-        public Equipment? Equipment { get; set; } = null;
+        public required int ParentEquipmentId { get; set; }
+        public Equipment? ParentEquipment { get; set; } = null;
 
         public required int VariantId { get; set; }
         public Equipment? Variant { get; set; } = null;
