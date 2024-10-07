@@ -369,7 +369,7 @@ namespace EquipmentDatabasePopulator5E
 
                 //load magic items that are variants
                 var variants = new List<Equipment>();
-                variants = await _context.Equipment.AsNoTracking().Where(e => e.IsVariant).ToListAsync();
+                variants = await _context.Equipment.Where(e => e.IsVariant).ToListAsync();
 
                 //load item data from the API
                 var httpClient = new HttpClient();
@@ -390,22 +390,24 @@ namespace EquipmentDatabasePopulator5E
                             variantNames.Add(ParseStringField(variantElement, "name"));
                         }
 
-                        //create relationship objects
+                        //create relationship
                         foreach (var variantName in variantNames)
                         {
-                            var variantID = variants.First(v => v.Name == variantName).Id;
-                            var newEquipmentVariant = new EquipmentVariant()
-                            {
-                                EquipmentId = baseItem.Id,
-                                VariantId = variantID
-                            };
-                            equipmentVariants.Add(newEquipmentVariant);
+                            //var variantID = variants.First(v => v.Name == variantName).Id;
+                            //var newEquipmentVariant = new EquipmentVariant()
+                            //{
+                            //    ParentEquipmentId = baseItem.Id,
+                            //    VariantId = variantID
+                            //};
+                            //equipmentVariants.Add(newEquipmentVariant);
+                            var variant = variants.First(v => v.Name == variantName);
+                            variant.ParentEquipmentId = baseItem.Id;
                         }
                     }
                 }
 
-                //insert into db
-                await _context.AddRangeAsync(equipmentVariants);
+                //update the db
+                //await _context.AddRangeAsync(equipmentVariants);
                 await _context.SaveChangesAsync();
             }
             catch (Exception e)
