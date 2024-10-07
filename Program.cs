@@ -52,7 +52,7 @@ namespace EquipmentDatabasePopulator5E
             await service.LoadMagicEquipment();
 
             //create relationship tables
-            await service.CreateMagicVariantsRelationships();
+            await service.CreateMagicVariantsReferences();
             //await service.CreatePackContentRelationships();
             //await service.CreateWeaponPropertyRelationships();
 

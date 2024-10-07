@@ -357,7 +357,7 @@ namespace EquipmentDatabasePopulator5E
             return equipment;
         }
 
-        public async Task CreateMagicVariantsRelationships()
+        public async Task CreateMagicVariantsReferences()
         {
             try
             {
