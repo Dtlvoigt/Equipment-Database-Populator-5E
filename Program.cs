@@ -51,8 +51,9 @@ namespace EquipmentDatabasePopulator5E
             await service.LoadEquipment();
             await service.LoadMagicEquipment();
 
-            //create relationship tables
-            await service.CreateMagicVariantsReferences();
+
+                //create relationship tables and references
+                await service.CreateVariantsReferences();
             //await service.CreatePackContentRelationships();
             //await service.CreateWeaponPropertyRelationships();
 
