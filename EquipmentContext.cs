@@ -66,12 +66,12 @@ namespace EquipmentDatabasePopulator5E
                 .HasOne(ewp => ewp.Equipment)
                 .WithMany(e => e.WeaponProperties)
                 .HasForeignKey(ewp => ewp.EquipmentId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<EquipmentWeaponProperty>()
                 .HasOne(ewp => ewp.WeaponProperty)
                 .WithMany()
                 .HasForeignKey(ewp => ewp.WeaponPropertyId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //define the composite key and foreign keys for PackContents
             modelBuilder.Entity<PackContent>()
@@ -79,13 +79,13 @@ namespace EquipmentDatabasePopulator5E
             modelBuilder.Entity<PackContent>()
                 .HasOne(pc => pc.PackEquipment)
                 .WithMany(e => e.PackContents)
-                .HasForeignKey(pc =>  pc.PackId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(pc => pc.PackId)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<PackContent>()
                 .HasOne(pc => pc.ContentEquipment)
                 .WithMany()
                 .HasForeignKey(pc => pc.ContentId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 
