@@ -5,7 +5,7 @@ namespace EquipmentDatabasePopulator5E
 {
     class Program
     {
-        public static bool rebuildDb = true;
+        public static bool rebuildDb = false;
 
         static async Task Main(string[] args)
         {
@@ -31,9 +31,6 @@ namespace EquipmentDatabasePopulator5E
                 //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Equipment");
                 //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Categories");
                 //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS WeaponProperties");
-
-                //create database from migration files
-                //await context.Database.MigrateAsync();
 
                 if (rebuildDb)
                 {
@@ -65,6 +62,7 @@ namespace EquipmentDatabasePopulator5E
                 //await service.CreateWeaponPropertyRelationships();
             }
 
+            //testing
             var equipment = await context.Equipment.Include(e => e.Variants).ToListAsync();
             //var variants = await context.EquipmentVariants.Include(e => e.Equipment).ThenInclude(e => e.Variants).ThenInclude(e => e.Variant).ToListAsync();
         }
