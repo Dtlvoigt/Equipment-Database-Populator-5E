@@ -419,7 +419,11 @@ namespace EquipmentDatabasePopulator5E
 
         public async Task CreatePackContentRelationships()
         {
+            var packContents = new List<PackContent>();
+
             //load pack item IDs
+            var packItems = new List<Equipment>();
+            packItems = await _context.Equipment.AsNoTracking().Where(e => e.GearCategory == "Equipment Packs").ToListAsync();
 
             //load items from the API
 
