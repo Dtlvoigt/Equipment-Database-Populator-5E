@@ -426,6 +426,69 @@ namespace EquipmentDatabasePopulator5E
             packItems = await _context.Equipment.AsNoTracking().Where(e => e.GearCategory == "Equipment Packs").ToListAsync();
 
             //load items from the API
+            var contentItems = new List<Equipment>();
+            contentItems = await _context.Equipment.AsNoTracking().Where(e => e.MagicItem == null && e.GearCategory != "Equipment Packs").ToListAsync();
+
+
+            //load item data from the API
+            var httpClient = new HttpClient();
+            foreach (var packItem in packItems)
+            {
+                var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + packItem.URL);
+                if (response.IsSuccessStatusCode)
+                {
+                    //create equipment loader
+                    var json = await response.Content.ReadAsStringAsync();
+                    var document = JsonDocument.Parse(json);
+                    var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
+
+                    //extract all variant names from API data
+                    foreach (var contentItemElement in equipmentLoader.PackContentsElement.EnumerateArray())
+                    {
+                        var itemName = "";
+                        var quantity = 0;
+
+                        if (contentItemElement.TryGetProperty("item", out JsonElement innerItemElement))
+                        {
+                            itemName = ParseStringField(innerItemElement, "name");
+                        }
+                        quantity = ParseIntField(contentItemElement, "quantity");
+                        
+                        var contentID = contentItems.First(i => i.Name == itemName).Id;
+                        var newPackContent = new PackContent()
+                        {
+                            PackId = packItem.Id,
+                            ContentId = contentID,
+                            Amount = quantity
+                        };
+                        packContents.Add(newPackContent);
+                        //if (contentItem.TryGetProperty("quantity", out JsonElement quantityElement))
+                        //{
+                        //    quantity = ParseIntField(innerItemElement, "quantity");
+                        //}
+                        //var itemInfo = contentItem.EnumerateArray();
+                        //contentNames.Add(ParseStringField(itemInfo, "name"));
+                    }
+
+                    //create relationship
+                    //foreach (var contentName in contentNames)
+                    //{
+                        //var variantID = variants.First(v => v.Name == variantName).Id;
+                        //var newEquipmentVariant = new EquipmentVariant()
+                        //{
+                        //    ParentEquipmentId = baseItem.Id,
+                        //    VariantId = variantID
+                        //};
+                        //equipmentVariants.Add(newEquipmentVariant);
+                        //var variant = variants.First(v => v.Name == variantName);
+                        //variant.ParentEquipmentId = baseItem.Id;
+                    //}
+                }
+            }
+
+            //add relationship items to db
+            await _context.AddRangeAsync(packContents);
+            await _context.SaveChangesAsync();
 
             //loop through each item in pack
             //load pack item ID
