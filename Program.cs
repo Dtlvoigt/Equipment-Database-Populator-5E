@@ -5,7 +5,7 @@ namespace EquipmentDatabasePopulator5E
 {
     class Program
     {
-        public static bool rebuildDb = true;
+        public static bool rebuildDb = false;
 
         static async Task Main(string[] args)
         {
@@ -63,7 +63,7 @@ namespace EquipmentDatabasePopulator5E
             }
 
             //testing
-            var equipment = await context.Equipment.Include(e => e.Variants).ToListAsync();
+            var parentEquipment = await context.Equipment.Where(e => e.HasVariant).Include(e => e.Variants).OrderBy(e => e.Id).ToListAsync();
             var packs = await context.Equipment.Where(e => e.GearCategory == "Equipment Packs").Include(e => e.PackContents).ToListAsync();
             //var variants = await context.EquipmentVariants.Include(e => e.Equipment).ThenInclude(e => e.Variants).ThenInclude(e => e.Variant).ToListAsync();
         }
