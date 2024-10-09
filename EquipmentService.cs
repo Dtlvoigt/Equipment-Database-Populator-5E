@@ -245,6 +245,7 @@ namespace EquipmentDatabasePopulator5E
             equipment.Name = equipmentLoader.Name;
             equipment.URL = equipmentLoader.URL;
             equipment.Category = ParseStringField(equipmentLoader.CategoryElement, "name");
+            equipment.MagicItem = false;
             equipment.Cost = ConvertToGold(equipmentLoader.CostElement);
             equipment.Weight = equipmentLoader.Weight;
 
