@@ -428,7 +428,7 @@ namespace EquipmentDatabasePopulator5E
 
             //load items from the API
             var contentItems = new List<Equipment>();
-            contentItems = await _context.Equipment.AsNoTracking().Where(e => e.MagicItem == null && e.GearCategory != "Equipment Packs").ToListAsync();
+            contentItems = await _context.Equipment.AsNoTracking().Where(e => e.MagicItem == false && e.GearCategory != "Equipment Packs").ToListAsync();
 
 
             //load item data from the API
