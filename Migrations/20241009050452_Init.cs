@@ -59,6 +59,7 @@ namespace EquipmentDatabasePopulator5E.Migrations
                     VehicleCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Speed = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rarity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsVariant = table.Column<bool>(type: "bit", nullable: false),
                     HasVariant = table.Column<bool>(type: "bit", nullable: false),
                     ParentEquipmentId = table.Column<int>(type: "int", nullable: true)
@@ -103,12 +104,14 @@ namespace EquipmentDatabasePopulator5E.Migrations
                         name: "FK_PackContents_Equipment_ContentId",
                         column: x => x.ContentId,
                         principalTable: "Equipment",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PackContents_Equipment_PackId",
                         column: x => x.PackId,
                         principalTable: "Equipment",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,12 +128,14 @@ namespace EquipmentDatabasePopulator5E.Migrations
                         name: "FK_EquipmentWeaponProperties_Equipment_EquipmentId",
                         column: x => x.EquipmentId,
                         principalTable: "Equipment",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EquipmentWeaponProperties_WeaponProperties_WeaponPropertyId",
                         column: x => x.WeaponPropertyId,
                         principalTable: "WeaponProperties",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

@@ -103,6 +103,8 @@ namespace EquipmentDatabasePopulator5E.Models
 
         [JsonPropertyName("rarity")]
         public JsonElement RarityElement { get; set; }
+        [JsonPropertyName("image")]
+        public string? ImageURL { get; set; }
         [JsonPropertyName("variants")]
         public JsonElement VariantsElement { get; set; }
         [JsonPropertyName("variant")]

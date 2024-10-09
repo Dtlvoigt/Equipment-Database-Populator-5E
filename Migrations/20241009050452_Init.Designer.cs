@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentDatabasePopulator5E.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    [Migration("20241007050933_Init")]
+    [Migration("20241009050452_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -62,6 +62,9 @@ namespace EquipmentDatabasePopulator5E.Migrations
 
                     b.Property<bool>("HasVariant")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsVariant")
                         .HasColumnType("bit");
@@ -236,13 +239,13 @@ namespace EquipmentDatabasePopulator5E.Migrations
                     b.HasOne("EquipmentDatabasePopulator5E.Models.Equipment", "Equipment")
                         .WithMany("WeaponProperties")
                         .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EquipmentDatabasePopulator5E.Models.WeaponProperty", "WeaponProperty")
                         .WithMany()
                         .HasForeignKey("WeaponPropertyId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Equipment");
@@ -255,13 +258,13 @@ namespace EquipmentDatabasePopulator5E.Migrations
                     b.HasOne("EquipmentDatabasePopulator5E.Models.Equipment", "ContentEquipment")
                         .WithMany()
                         .HasForeignKey("ContentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EquipmentDatabasePopulator5E.Models.Equipment", "PackEquipment")
                         .WithMany("PackContents")
                         .HasForeignKey("PackId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ContentEquipment");

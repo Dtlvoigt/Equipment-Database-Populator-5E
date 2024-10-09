@@ -79,6 +79,7 @@ namespace EquipmentDatabasePopulator5E.Models
         /////////////////////////
 
         public string? Rarity { get; set; }
+        public string? ImageURL { get; set; }
         //public string? Variants {  get; set; }
         public bool IsVariant { get; set; }
         public bool HasVariant { get; set; }
