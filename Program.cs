@@ -58,12 +58,13 @@ namespace EquipmentDatabasePopulator5E
 
                 //create relationship tables and references
                 await service.CreateVariantsReferences();
-                //await service.CreatePackContentRelationships();
+                await service.CreatePackContentRelationships();
                 //await service.CreateWeaponPropertyRelationships();
             }
 
             //testing
             var equipment = await context.Equipment.Include(e => e.Variants).ToListAsync();
+            var packs = await context.Equipment.Where(e => e.GearCategory == "Equipment Packs").Include(e => e.PackContents).ToListAsync();
             //var variants = await context.EquipmentVariants.Include(e => e.Equipment).ThenInclude(e => e.Variants).ThenInclude(e => e.Variant).ToListAsync();
         }
     }
