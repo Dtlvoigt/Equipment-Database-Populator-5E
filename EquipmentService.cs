@@ -362,7 +362,7 @@ namespace EquipmentDatabasePopulator5E
         {
             try
             {
-                var equipmentVariants = new List<EquipmentVariant>();
+                //var equipmentVariants = new List<EquipmentVariant>();
 
                 //load magic items with variants
                 var baseVariants = new List<Equipment>();
