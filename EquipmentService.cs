@@ -281,6 +281,7 @@ namespace EquipmentDatabasePopulator5E
             equipment.URL = equipmentLoader.URL;
             equipment.Category = ParseStringField(equipmentLoader.CategoryElement, "name");
             equipment.Rarity = ParseStringField(equipmentLoader.RarityElement, "name");
+            equipment.ImageURL = equipmentLoader.ImageURL;
             equipment.IsVariant = equipmentLoader.IsVariant;
 
             //description element may contain multiple strings, so they get concatenated

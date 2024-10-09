@@ -5,7 +5,7 @@ namespace EquipmentDatabasePopulator5E
 {
     class Program
     {
-        public static bool rebuildDb = false;
+        public static bool rebuildDb = true;
 
         static async Task Main(string[] args)
         {
