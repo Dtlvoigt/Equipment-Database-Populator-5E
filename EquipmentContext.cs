@@ -37,6 +37,18 @@ namespace EquipmentDatabasePopulator5E
                 .HasForeignKey(e => e.ParentEquipmentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Equipment>()
+                .HasMany(i => i.WeaponProperties)
+                .WithMany()
+                .UsingEntity<EquipmentWeaponProperty>(
+                    j => j.HasOne(ewp => ewp.WeaponProperty)
+                    .WithMany()
+                    .HasForeignKey(ewp => ewp.WeaponPropertyId),
+                    j => j.HasOne(ewp => ewp.Equipment)
+                    .WithMany()
+                    .HasForeignKey(ewp => ewp.EquipmentId)
+                    );
+
             modelBuilder.Entity<EquipmentCategory>()
                 .HasIndex(e => e.Name)
                 .IsUnique();
@@ -60,18 +72,19 @@ namespace EquipmentDatabasePopulator5E
             //    .OnDelete(DeleteBehavior.NoAction);
 
             //define the composite key and foreign keys for EquipmentWeaponProperties
-            modelBuilder.Entity<EquipmentWeaponProperty>()
-                .HasKey(e => new { e.EquipmentId, e.WeaponPropertyId });
-            modelBuilder.Entity<EquipmentWeaponProperty>()
-                .HasOne(ewp => ewp.Equipment)
-                .WithMany(e => e.WeaponProperties)
-                .HasForeignKey(ewp => ewp.EquipmentId)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<EquipmentWeaponProperty>()
-                .HasOne(ewp => ewp.WeaponProperty)
-                .WithMany()
-                .HasForeignKey(ewp => ewp.WeaponPropertyId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<EquipmentWeaponProperty>()
+            //    .HasKey(e => new { e.EquipmentId, e.WeaponPropertyId });
+            //modelBuilder.Entity<EquipmentWeaponProperty>()
+            //    .HasOne(ewp => ewp.WeaponProperty)
+            //    .WithMany()
+            //    .HasForeignKey(ewp => ewp.WeaponPropertyId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<EquipmentWeaponProperty>()
+            //    .HasOne(ewp => ewp.Equipment)
+            //    .WithMany(e => e.WeaponProperties)
+            //    .HasForeignKey(ewp => ewp.EquipmentId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+            
 
             //define the composite key and foreign keys for PackContents
             modelBuilder.Entity<PackContent>()

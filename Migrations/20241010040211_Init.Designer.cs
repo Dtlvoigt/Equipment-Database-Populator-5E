@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentDatabasePopulator5E.Migrations
 {
     [DbContext(typeof(EquipmentContext))]
-    [Migration("20241009050452_Init")]
+    [Migration("20241010040211_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -237,15 +237,15 @@ namespace EquipmentDatabasePopulator5E.Migrations
             modelBuilder.Entity("EquipmentDatabasePopulator5E.Models.EquipmentWeaponProperty", b =>
                 {
                     b.HasOne("EquipmentDatabasePopulator5E.Models.Equipment", "Equipment")
-                        .WithMany("WeaponProperties")
+                        .WithMany()
                         .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EquipmentDatabasePopulator5E.Models.WeaponProperty", "WeaponProperty")
                         .WithMany()
                         .HasForeignKey("WeaponPropertyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Equipment");
@@ -277,8 +277,6 @@ namespace EquipmentDatabasePopulator5E.Migrations
                     b.Navigation("PackContents");
 
                     b.Navigation("Variants");
-
-                    b.Navigation("WeaponProperties");
                 });
 #pragma warning restore 612, 618
         }

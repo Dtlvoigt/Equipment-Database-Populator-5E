@@ -129,13 +129,13 @@ namespace EquipmentDatabasePopulator5E.Migrations
                         column: x => x.EquipmentId,
                         principalTable: "Equipment",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EquipmentWeaponProperties_WeaponProperties_WeaponPropertyId",
                         column: x => x.WeaponPropertyId,
                         principalTable: "WeaponProperties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
