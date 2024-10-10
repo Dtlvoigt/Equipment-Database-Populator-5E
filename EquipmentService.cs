@@ -420,13 +420,15 @@ namespace EquipmentDatabasePopulator5E
 
         public async Task CreatePackContentRelationships()
         {
+            try
+            {
             var packContents = new List<PackContent>();
 
-            //load pack item IDs
+                //load pack items
             var packItems = new List<Equipment>();
             packItems = await _context.Equipment.AsNoTracking().Where(e => e.GearCategory == "Equipment Packs").ToListAsync();
 
-            //load items from the API
+                //load content items
             var contentItems = new List<Equipment>();
             contentItems = await _context.Equipment.AsNoTracking().Where(e => e.MagicItem == false && e.GearCategory != "Equipment Packs").ToListAsync();
 
@@ -443,19 +445,23 @@ namespace EquipmentDatabasePopulator5E
                     var document = JsonDocument.Parse(json);
                     var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
 
-                    //extract all variant names from API data
+                        //extract all content items from API data
                     foreach (var contentItemElement in equipmentLoader.PackContentsElement.EnumerateArray())
                     {
                         var itemName = "";
                         var quantity = 0;
 
+                            //extract item and quantity information from element
                         if (contentItemElement.TryGetProperty("item", out JsonElement innerItemElement))
                         {
                             itemName = ParseStringField(innerItemElement, "name");
                         }
                         quantity = ParseIntField(contentItemElement, "quantity");
                         
+                            //find ID of matching content item
                         var contentID = contentItems.First(i => i.Name == itemName).Id;
+
+                            //create new relationship object and add to list
                         var newPackContent = new PackContent()
                         {
                             PackId = packItem.Id,
@@ -490,9 +496,11 @@ namespace EquipmentDatabasePopulator5E
             //add relationship items to db
             await _context.AddRangeAsync(packContents);
             await _context.SaveChangesAsync();
-
-            //loop through each item in pack
-            //load pack item ID
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             //create relationship object and insert into db
         }
