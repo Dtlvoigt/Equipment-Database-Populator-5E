@@ -422,99 +422,123 @@ namespace EquipmentDatabasePopulator5E
         {
             try
             {
-            var packContents = new List<PackContent>();
+                var packContents = new List<PackContent>();
 
                 //load pack items
-            var packItems = new List<Equipment>();
-            packItems = await _context.Equipment.AsNoTracking().Where(e => e.GearCategory == "Equipment Packs").ToListAsync();
+                var packItems = new List<Equipment>();
+                packItems = await _context.Equipment.AsNoTracking().Where(e => e.GearCategory == "Equipment Packs").ToListAsync();
 
                 //load content items
-            var contentItems = new List<Equipment>();
-            contentItems = await _context.Equipment.AsNoTracking().Where(e => e.MagicItem == false && e.GearCategory != "Equipment Packs").ToListAsync();
+                var contentItems = new List<Equipment>();
+                contentItems = await _context.Equipment.AsNoTracking().Where(e => e.MagicItem == false && e.GearCategory != "Equipment Packs").ToListAsync();
 
 
-            //load item data from the API
-            var httpClient = new HttpClient();
-            foreach (var packItem in packItems)
-            {
-                var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + packItem.URL);
-                if (response.IsSuccessStatusCode)
+                //load item data from the API
+                var httpClient = new HttpClient();
+                foreach (var packItem in packItems)
                 {
-                    //create equipment loader
-                    var json = await response.Content.ReadAsStringAsync();
-                    var document = JsonDocument.Parse(json);
-                    var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
+                    var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + packItem.URL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //create equipment loader
+                        var json = await response.Content.ReadAsStringAsync();
+                        var document = JsonDocument.Parse(json);
+                        var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
 
                         //extract all content items from API data
-                    foreach (var contentItemElement in equipmentLoader.PackContentsElement.EnumerateArray())
-                    {
-                        var itemName = "";
-                        var quantity = 0;
+                        foreach (var contentItemElement in equipmentLoader.PackContentsElement.EnumerateArray())
+                        {
+                            var itemName = "";
+                            var quantity = 0;
 
                             //extract item and quantity information from element
-                        if (contentItemElement.TryGetProperty("item", out JsonElement innerItemElement))
-                        {
-                            itemName = ParseStringField(innerItemElement, "name");
-                        }
-                        quantity = ParseIntField(contentItemElement, "quantity");
-                        
+                            if (contentItemElement.TryGetProperty("item", out JsonElement innerItemElement))
+                            {
+                                itemName = ParseStringField(innerItemElement, "name");
+                            }
+                            quantity = ParseIntField(contentItemElement, "quantity");
+
                             //find ID of matching content item
-                        var contentID = contentItems.First(i => i.Name == itemName).Id;
+                            var contentID = contentItems.First(i => i.Name == itemName).Id;
 
                             //create new relationship object and add to list
-                        var newPackContent = new PackContent()
-                        {
-                            PackId = packItem.Id,
-                            ContentId = contentID,
-                            Amount = quantity
-                        };
-                        packContents.Add(newPackContent);
-                        //if (contentItem.TryGetProperty("quantity", out JsonElement quantityElement))
-                        //{
-                        //    quantity = ParseIntField(innerItemElement, "quantity");
-                        //}
-                        //var itemInfo = contentItem.EnumerateArray();
-                        //contentNames.Add(ParseStringField(itemInfo, "name"));
+                            var newPackContent = new PackContent()
+                            {
+                                PackId = packItem.Id,
+                                ContentId = contentID,
+                                Amount = quantity
+                            };
+                            packContents.Add(newPackContent);
+                        }
                     }
-
-                    //create relationship
-                    //foreach (var contentName in contentNames)
-                    //{
-                        //var variantID = variants.First(v => v.Name == variantName).Id;
-                        //var newEquipmentVariant = new EquipmentVariant()
-                        //{
-                        //    ParentEquipmentId = baseItem.Id,
-                        //    VariantId = variantID
-                        //};
-                        //equipmentVariants.Add(newEquipmentVariant);
-                        //var variant = variants.First(v => v.Name == variantName);
-                        //variant.ParentEquipmentId = baseItem.Id;
-                    //}
                 }
-            }
 
-            //add relationship items to db
-            await _context.AddRangeAsync(packContents);
-            await _context.SaveChangesAsync();
+                //add relationship items to db
+                await _context.AddRangeAsync(packContents);
+                await _context.SaveChangesAsync();
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-
-            //create relationship object and insert into db
+            
         }
 
         public async Task CreateWeaponPropertyRelationships()
         {
-            //load weapon IDs
-            //load weapon property IDs
+            try
+            {
+                var weaponPropertyRelationships = new List<EquipmentWeaponProperty>();
 
-            //load items from the API
+                //load weapon items
+                var weapons = new List<Equipment>();
+                weapons = await _context.Equipment.AsNoTracking().Where(e => e.MagicItem == false && e.Category == "Weapon").ToListAsync();
 
-            //loop through each property
+                //load weapon properties
+                var weaponProperties = new List<WeaponProperty>();
+                weaponProperties = await _context.WeaponProperties.ToListAsync();
 
-            //create relationship object and insert into db
+
+                //load item data from the API
+                var httpClient = new HttpClient();
+                foreach (var weapon in weapons)
+                {
+                    var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + weapon.URL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //create equipment loader
+                        var json = await response.Content.ReadAsStringAsync();
+                        var document = JsonDocument.Parse(json);
+                        var equipmentLoader = JsonSerializer.Deserialize<EquipmentLoader>(document);
+
+                        //extract all content items from API data
+                        foreach (var weaponPropertyElement in equipmentLoader.WeaponPropertiesElement.EnumerateArray())
+                        {
+                            //extract name of property and find the ID
+                            var weaponPropertyName = "";
+                            weaponPropertyName = ParseStringField(weaponPropertyElement, "name");
+                            var propertyID = weaponProperties.First(p => p.Name == weaponPropertyName).Id;
+
+                            //create relationship object and add to the list
+                            var newWeaponPropertyRelationship = new EquipmentWeaponProperty()
+                            {
+                                EquipmentId = weapon.Id,
+                                WeaponPropertyId = propertyID
+                            };
+
+                            weaponPropertyRelationships.Add(newWeaponPropertyRelationship);
+                        }
+                    }
+                }
+
+                //add relationship items to db
+                await _context.AddRangeAsync(weaponPropertyRelationships);
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         //////////////////////
