@@ -59,7 +59,7 @@ namespace EquipmentDatabasePopulator5E
                 //create relationship tables and references
                 await service.CreateVariantsReferences();
                 await service.CreatePackContentRelationships();
-                //await service.CreateWeaponPropertyRelationships();
+                await service.CreateWeaponPropertyRelationships();
             }
 
             //testing
