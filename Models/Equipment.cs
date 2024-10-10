@@ -41,7 +41,8 @@ namespace EquipmentDatabasePopulator5E.Models
         public string? TwoHandedDamageType { get; set; }
         public string? SpecialAttribute { get; set; }
         //public string WeaponProperties { get; set; }
-        public ICollection<EquipmentWeaponProperty>? WeaponProperties { get; set; }
+        //public ICollection<EquipmentWeaponProperty>? WeaponProperties { get; set; }
+        public ICollection<WeaponProperty>? WeaponProperties { get; set; }
 
         ////////////////////
         //armor properties//
