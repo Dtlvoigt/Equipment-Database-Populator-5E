@@ -293,14 +293,6 @@ namespace EquipmentDatabasePopulator5E
                 equipment.HasVariant = equipmentLoader.VariantsElement.EnumerateArray().Any();
             }
 
-            //extract and concatenate all variant names if they exist
-            //var variantNames = new List<string>();
-            //foreach (var variantElement in equipmentLoader.VariantsElement.EnumerateArray())
-            //{
-            //    variantNames.Add(ParseStringField(variantElement, "name"));
-            //}
-            //equipment.Variants = string.Join("; ", variantNames);
-
             return equipment;
         }
 
@@ -395,13 +387,6 @@ namespace EquipmentDatabasePopulator5E
                         //create relationship
                         foreach (var variantName in variantNames)
                         {
-                            //var variantID = variants.First(v => v.Name == variantName).Id;
-                            //var newEquipmentVariant = new EquipmentVariant()
-                            //{
-                            //    ParentEquipmentId = baseItem.Id,
-                            //    VariantId = variantID
-                            //};
-                            //equipmentVariants.Add(newEquipmentVariant);
                             var variant = variants.First(v => v.Name == variantName);
                             variant.ParentEquipmentId = baseItem.Id;
                         }
