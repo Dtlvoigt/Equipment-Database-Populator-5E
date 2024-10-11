@@ -30,6 +30,5 @@ namespace EquipmentDatabasePopulator5E.Models
             }
             set { }
         }
-        //public ICollection<EquipmentWeaponProperty>? WeaponProperties { get; set; }
     }
 }
