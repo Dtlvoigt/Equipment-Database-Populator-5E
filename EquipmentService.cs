@@ -97,6 +97,7 @@ namespace EquipmentDatabasePopulator5E
 
                 if (response.IsSuccessStatusCode)
                 {
+                    //parse document returned from API
                     var json = await response.Content.ReadAsStringAsync();
                     var document = JsonDocument.Parse(json);
                     var root = document.RootElement.GetProperty("results");
@@ -180,10 +181,12 @@ namespace EquipmentDatabasePopulator5E
 
                 if (response.IsSuccessStatusCode)
                 {
+                    //parse document returned from API
                     var json = await response.Content.ReadAsStringAsync();
                     var document = JsonDocument.Parse(json);
                     var root = document.RootElement.GetProperty("results");
 
+                    //look at each category loaded from the API and add to list
                     foreach (var jsonElement in root.EnumerateArray())
                     {
                         var url = ParseStringField(jsonElement, "url");
@@ -215,6 +218,7 @@ namespace EquipmentDatabasePopulator5E
                     var response = await httpClient.GetAsync("https://www.dnd5eapi.co" + url);
                     if (response.IsSuccessStatusCode)
                     {
+                        //parse document returned from API
                         var json = await response.Content.ReadAsStringAsync();
                         var document = JsonDocument.Parse(json);
                         var newWeaponProperty = JsonSerializer.Deserialize<WeaponProperty>(document);
@@ -263,14 +267,12 @@ namespace EquipmentDatabasePopulator5E
             equipment.MaxDexBonus = ParseIntField(equipmentLoader.ArmorClassElement, "max_bonus");
             equipment.StrengthMinimum = equipmentLoader.StrengthMinimum;
             equipment.StealthDisadvantage = equipmentLoader.StealthDisadvantage;
-
             return equipment;
         }
 
         public Equipment ParseGear(EquipmentLoader equipmentLoader, Equipment equipment)
         {
             equipment.GearCategory = ParseStringField(equipmentLoader.GearCategoryElement, "name");
-
             return equipment;
         }
 
@@ -299,7 +301,6 @@ namespace EquipmentDatabasePopulator5E
         public Equipment ParseTool(EquipmentLoader equipmentLoader, Equipment equipment)
         {
             equipment.ToolCategory = equipmentLoader.ToolCategory;
-
             return equipment;
         }
 
@@ -311,7 +312,6 @@ namespace EquipmentDatabasePopulator5E
             var speedAmount = ParseDoubleField(equipmentLoader.SpeedElement, "quantity");
             var speedUnit = ParseStringField(equipmentLoader.SpeedElement, "unit");
             equipment.Speed = speedAmount + " " + speedUnit;
-
             return equipment;
         }
 
@@ -394,7 +394,6 @@ namespace EquipmentDatabasePopulator5E
                 }
 
                 //update the db
-                //await _context.AddRangeAsync(equipmentVariants);
                 await _context.SaveChangesAsync();
             }
             catch (Exception e)
@@ -466,7 +465,6 @@ namespace EquipmentDatabasePopulator5E
             {
                 Console.WriteLine(e.Message);
             }
-            
         }
 
         public async Task CreateWeaponPropertyRelationships()
