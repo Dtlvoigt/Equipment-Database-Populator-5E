@@ -61,11 +61,6 @@ namespace EquipmentDatabasePopulator5E
                 await service.CreatePackContentRelationships();
                 await service.CreateWeaponPropertyRelationships();
             }
-
-            //testing
-            var parentEquipment = await context.Equipment.Where(e => e.HasVariant).Include(e => e.Variants).OrderBy(e => e.Id).ToListAsync();
-            var packs = await context.Equipment.Where(e => e.GearCategory == "Equipment Packs").Include(e => e.PackContents).ToListAsync();
-            var weaponProperties = await context.Equipment.Where(e => e.Category == "Weapon").Include(e => e.WeaponProperties).ToListAsync();
         }
     }
 }
