@@ -355,8 +355,6 @@ namespace EquipmentDatabasePopulator5E
         {
             try
             {
-                //var equipmentVariants = new List<EquipmentVariant>();
-
                 //load magic items with variants
                 var baseVariants = new List<Equipment>();
                 baseVariants = await _context.Equipment.AsNoTracking().Where(e => e.HasVariant).ToListAsync();
@@ -395,6 +393,7 @@ namespace EquipmentDatabasePopulator5E
 
                 //update the db
                 await _context.SaveChangesAsync();
+                Console.WriteLine("Variant equipment references added to database.");
             }
             catch (Exception e)
             {
@@ -460,6 +459,7 @@ namespace EquipmentDatabasePopulator5E
                 //add relationship items to db
                 await _context.AddRangeAsync(packContents);
                 await _context.SaveChangesAsync();
+                Console.WriteLine("Pack contents relationships added to database.");
             }
             catch(Exception e)
             {
@@ -517,6 +517,7 @@ namespace EquipmentDatabasePopulator5E
                 //add relationship items to db
                 await _context.AddRangeAsync(weaponPropertyRelationships);
                 await _context.SaveChangesAsync();
+                Console.WriteLine("Equipment weapon property relationships added to database.");
             }
             catch(Exception e)
             {
