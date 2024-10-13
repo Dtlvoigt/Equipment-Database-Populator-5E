@@ -5,7 +5,7 @@ namespace EquipmentDatabasePopulator5E
 {
     class Program
     {
-        public static bool rebuildDb = false;
+        public static bool rebuildDb = true;
 
         static async Task Main(string[] args)
         {
@@ -24,22 +24,19 @@ namespace EquipmentDatabasePopulator5E
 
             using (var context = new EquipmentContext(optionsBuilder.Options))
             {
-                //remove tables from database
-                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS EquipmentVariants");
-                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS EquipmentWeaponProperties");
-                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS PackContents");
-                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Equipment");
-                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Categories");
-                //await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS WeaponProperties");
-
                 if (rebuildDb)
                 {
-                    context.Database.EnsureDeleted();
+                    //clear tables if they exist and then recreate them
+                    await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS EquipmentWeaponProperties");
+                    await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS PackContents");
+                    await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Equipment");
+                    await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS Categories");
+                    await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS WeaponProperties");
                     context.Database.EnsureCreated();
-                }
 
-                //begin database operations
-                await LoadService(context);
+                    //begin database operations
+                    await LoadService(context);
+                }
             }
         }
 
@@ -47,20 +44,16 @@ namespace EquipmentDatabasePopulator5E
         {
             var service = new EquipmentService(context);
 
-            if (rebuildDb)
-            {
-                //load equipment information into database
-                await service.LoadEquipmentCategories();
-                await service.LoadWeaponProperties();
-                await service.LoadEquipment();
-                await service.LoadMagicEquipment();
+            //load equipment information into database
+            await service.LoadEquipmentCategories();
+            await service.LoadWeaponProperties();
+            await service.LoadEquipment();
+            await service.LoadMagicEquipment();
 
-
-                //create relationship tables and references
-                await service.CreateVariantsReferences();
-                await service.CreatePackContentRelationships();
-                await service.CreateWeaponPropertyRelationships();
-            }
+            //create relationship tables and references
+            await service.CreateVariantsReferences();
+            await service.CreatePackContentRelationships();
+            await service.CreateWeaponPropertyRelationships();
         }
     }
 }
