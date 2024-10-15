@@ -5,7 +5,7 @@ namespace EquipmentDatabasePopulator5E
 {
     class Program
     {
-        public static bool rebuildDb = true;
+        public static bool buildDatabase = true;
 
         static async Task Main(string[] args)
         {
@@ -24,7 +24,7 @@ namespace EquipmentDatabasePopulator5E
 
             using (var context = new EquipmentContext(optionsBuilder.Options))
             {
-                if (rebuildDb)
+                if (buildDatabase)
                 {
                     //clear tables if they exist and then recreate them
                     await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS EquipmentWeaponProperties");
