@@ -37,6 +37,13 @@ namespace EquipmentDatabasePopulator5E
                     //begin database operations
                     await LoadService(context);
                 }
+
+                //place tests here
+                await context.Categories.ToListAsync();
+                await context.Equipment.ToListAsync();
+                await context.PackContents.ToListAsync();
+                await context.WeaponProperties.ToListAsync();
+                await context.EquipmentWeaponProperties.ToListAsync();
             }
         }
 
