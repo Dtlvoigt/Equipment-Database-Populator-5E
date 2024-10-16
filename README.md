@@ -38,7 +38,7 @@ dotnet run
 ```
 
 ## Schema
-![Alt text](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/Schema.png "a title")
+![Schema](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/Schema.png "Database Schema")
 
 ## Usage
 This app will pull data from the API, process the JSON files, and populate the database. Each item is transformed into a structured format, with relationships between items, weapon properties, and magic item variants managed automatically.
