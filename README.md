@@ -37,8 +37,15 @@ cd Equipment-Database-Populator-5E
 dotnet run
 ```
 
+## Schema
+![Alt text](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/Schema.png "a title")
+
 ## Usage
-This app will pull data from the API, process the JSON, and populate the database. Each item is transformed into a structured format, with relationships between items, weapon properties, and variants managed automatically.
+This app will pull data from the API, process the JSON files, and populate the database. Each item is transformed into a structured format, with relationships between items, weapon properties, and magic item variants managed automatically.
+
+## Differences from the API Database
+- Mundane equipment and Magic items are combined into a single table
+- Magic items and their variants are now represented as 'Parent' and 'Child' items 
 
 ## Contributing
 Feel free to submit pull requests or open issues if you find any bugs or want to suggest features.
