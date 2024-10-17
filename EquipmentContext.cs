@@ -31,6 +31,16 @@ namespace EquipmentDatabasePopulator5E
             modelBuilder.Entity<Equipment>()
                 .HasIndex(e => e.Name)
                 .IsUnique();
+
+            modelBuilder.Entity<EquipmentCategory>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<WeaponProperty>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
+
+            //define the foreign key for magic item variants
             modelBuilder.Entity<Equipment>()
                 .HasMany(e => e.Variants)
                 .WithOne(e => e.ParentEquipment)
