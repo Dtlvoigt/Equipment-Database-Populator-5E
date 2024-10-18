@@ -225,6 +225,8 @@ namespace EquipmentDatabasePopulator5E
 
                         if (newWeaponProperty != null)
                         {
+                            //parse description element and add to list
+                            newWeaponProperty.Description = string.Join("; ", newWeaponProperty.DescriptionElement.EnumerateArray().Select(d => d.GetString()));
                             weaponProperties.Add(newWeaponProperty);
                         }
                     }

@@ -13,22 +13,7 @@ namespace EquipmentDatabasePopulator5E.Models
         public string Name { get; set; }
         [NotMapped]
         [JsonPropertyName("desc")]
-        public JsonElement? DescriptionElement { get; set; }
-        public string? Description
-        {
-            get
-            {
-                if (DescriptionElement.HasValue && DescriptionElement.Value.ValueKind == JsonValueKind.Array)
-                {
-                    // extract all strings from the array and join them with a delimiter
-                    return string.Join("; ", DescriptionElement.Value.EnumerateArray().Select(d => d.GetString()));
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set { }
-        }
+        public JsonElement DescriptionElement { get; set; }
+        public string? Description { get; set; }
     }
 }
