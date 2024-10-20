@@ -43,7 +43,14 @@ dotnet run
 ## Usage
 This app will pull data from the API, process the JSON files, and populate the database. Each item is transformed into a structured format, with relationships between items, weapon properties, and magic item variants managed automatically.
 
-## Querying objects in C#
+## Querying equipment data in C#
+1. Searching for equipment
+
+2. Searching for weapons with weapon properties
+
+3. Searching for magic items and their variants
+
+4. Searching for packs and the contents within
 
 ## Differences from the API Database
 - Magic and non-magic items are combined into a single table
