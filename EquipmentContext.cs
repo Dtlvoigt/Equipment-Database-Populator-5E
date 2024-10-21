@@ -56,8 +56,7 @@ namespace EquipmentDatabasePopulator5E
                     .HasForeignKey(ewp => ewp.WeaponPropertyId),
                     ewp => ewp.HasOne(ewp => ewp.Equipment)
                     .WithMany()
-                    .HasForeignKey(ewp => ewp.EquipmentId)
-                    );
+                    .HasForeignKey(ewp => ewp.EquipmentId));
 
             //define the composite key for EquipmentWeaponProperties
             modelBuilder.Entity<EquipmentWeaponProperty>()
