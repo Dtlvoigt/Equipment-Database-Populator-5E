@@ -40,8 +40,6 @@ namespace EquipmentDatabasePopulator5E.Models
         public string? TwoHandedDamageDice { get; set; }
         public string? TwoHandedDamageType { get; set; }
         public string? SpecialAttribute { get; set; }
-        //public string WeaponProperties { get; set; }
-        //public ICollection<EquipmentWeaponProperty>? WeaponProperties { get; set; }
         public ICollection<WeaponProperty>? WeaponProperties { get; set; }
 
         ////////////////////
@@ -60,7 +58,6 @@ namespace EquipmentDatabasePopulator5E.Models
         ///////////////////
 
         public string? GearCategory { get; set; }
-        //public string? PackContents { get; set; }
         public ICollection<PackContent>? PackContents { get; set; }
 
         ///////////////////
@@ -81,12 +78,10 @@ namespace EquipmentDatabasePopulator5E.Models
 
         public string? Rarity { get; set; }
         public string? ImageURL { get; set; }
-        //public string? Variants {  get; set; }
         public bool IsVariant { get; set; }
         public bool HasVariant { get; set; }
         public int? ParentEquipmentId { get; set; }
         public Equipment? ParentEquipment { get; set; }
         public ICollection<Equipment>? Variants { get; set; }
-        //public ICollection<EquipmentVariant>? Variants { get; set; }
     }
 }
