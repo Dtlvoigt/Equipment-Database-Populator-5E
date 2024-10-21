@@ -21,7 +21,6 @@ namespace EquipmentDatabasePopulator5E
         public DbSet<WeaponProperty> WeaponProperties { get; set; }
         public DbSet<EquipmentWeaponProperty> EquipmentWeaponProperties { get; set; }
         public DbSet<PackContent> PackContents { get; set; }
-        //public DbSet<EquipmentVariant> EquipmentVariants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
