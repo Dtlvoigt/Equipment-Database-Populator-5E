@@ -43,8 +43,8 @@ dotnet run
 ## Usage
 This app will pull data from the API, process the JSON files, and populate the database. Each item is transformed into a structured format, with relationships between items, weapon properties, and magic item variants managed automatically.
 
-## Querying equipment data in C#
-1. Searching for equipment
+## Querying equipment data
+### Searching for weapons with weapon properties
 ```
 SELECT
 	w.Name as WeaponName,
@@ -59,12 +59,11 @@ INNER JOIN
 ORDER BY
 	w.Id, wp.Id
 ```
+![Weapon property query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/WeaponPropertiesQuery.png "Weapon Property Query")
 
-2. Searching for weapons with weapon properties
+### Searching for magic items and their variants
 
-3. Searching for magic items and their variants
-
-4. Searching for packs and the contents within
+### Searching for pack items and the contents they contain
 
 ## Differences from the API Database
 - Magic and non-magic items are combined into a single table
