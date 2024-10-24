@@ -63,7 +63,7 @@ ORDER BY
 
 ### Searching for magic items and their variants
 
-### Searching for pack items and the contents they contain
+### Searching for pack items and the equipment they contain
 
 ## Differences from the API Database
 - Magic and non-magic items are combined into a single table
