@@ -45,6 +45,20 @@ This app will pull data from the API, process the JSON files, and populate the d
 
 ## Querying equipment data in C#
 1. Searching for equipment
+```
+SELECT
+	w.Name as WeaponName,
+	wp.Name as WeaponProperty,
+	wp.Description as Description
+FROM 
+	Equipment w
+INNER JOIN
+	EquipmentWeaponProperties ewp ON w.Id = ewp.EquipmentId
+INNER JOIN
+	WeaponProperties wp ON ewp.WeaponPropertyId = wp.Id
+ORDER BY
+	w.Id, wp.Id
+```
 
 2. Searching for weapons with weapon properties
 
