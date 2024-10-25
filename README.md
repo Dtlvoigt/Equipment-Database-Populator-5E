@@ -73,9 +73,24 @@ INNER JOIN
 ORDER BY
 	e.Id, v.Id
 ```
-![Variant itmes query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/VariantItemsQuery.png "Variants Query")
+![Variant items query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/VariantItemsQuery.png "Variants Query")
 
 ### Searching for pack items and the equipment they contain
+```
+SELECT
+	p.Name as PackItem,
+	c.Name as Contents,
+	pc.Amount
+FROM 
+	Equipment p
+INNER JOIN
+	PackContents pc ON p.Id = pc.PackId
+INNER JOIN
+	Equipment c ON c.Id = pc.ContentId
+ORDER BY
+	p.Id, c.Id
+```
+![Pack items query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/PackContentsQuery.png "Packs Query")
 
 ## Differences from the API Database
 - Magic and non-magic items are combined into a single table
