@@ -61,7 +61,19 @@ ORDER BY
 ```
 ![Weapon property query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/WeaponPropertiesQuery.png "Weapon Query")
 
-### Searching for magic items and their variants
+### Searching for magic items with variants
+```
+SELECT
+	e.Name as ParentItem,
+	v.Name as VariantItem
+FROM 
+	Equipment e
+INNER JOIN
+	Equipment v ON e.Id = v.ParentEquipmentId
+ORDER BY
+	e.Id, v.Id
+```
+![Variant itmes query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/VariantItemsQuery.png "Variants Query")
 
 ### Searching for pack items and the equipment they contain
 
