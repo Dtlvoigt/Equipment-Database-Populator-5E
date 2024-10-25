@@ -59,7 +59,7 @@ INNER JOIN
 ORDER BY
 	w.Id, wp.Id
 ```
-![Weapon property query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/WeaponPropertiesQuery.png "Weapon Property Query")
+![Weapon property query results](https://github.com/Dtlvoigt/Equipment-Database-Populator-5E/blob/master/WeaponPropertiesQuery.png "Weapon Query")
 
 ### Searching for magic items and their variants
 
