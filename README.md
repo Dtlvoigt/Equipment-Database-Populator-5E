@@ -18,12 +18,11 @@ This console app loads and organizes D&D 5th Edition equipment data into an SQL 
 git clone https://github.com/Dtlvoigt/Equipment-Database-Populator-5E.git
 ```
 
-2. Navigate to the project directory:
+2. Navigate to the project directory and update appsettings.json with your database connection:
 ```
 cd Equipment-Database-Populator-5E
 ```
 
-3. Set up your database connection in appsettings.json.
 ```
 {
   "ConnectionStrings": {
@@ -31,6 +30,9 @@ cd Equipment-Database-Populator-5E
   }
 }
 ```
+
+3. Install the dotnet sdk:
+https://learn.microsoft.com/en-us/dotnet/core/install/linux
 
 4. Run the console app:
 ```
