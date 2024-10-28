@@ -12,7 +12,11 @@ This console app loads and organizes D&D 5th Edition equipment data into an SQL 
 - .NET 6.0 SDK
 - SQL Server (or any other database supported by EF Core)
 
-### Installation
+### Installation on Windows
+
+
+
+### Installation on Linux
 1. Clone the repository:
 ```
 git clone https://github.com/Dtlvoigt/Equipment-Database-Populator-5E.git
