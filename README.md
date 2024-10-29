@@ -13,7 +13,9 @@ This console app loads and organizes D&D 5th Edition equipment data into an SQL 
 - SQL Server (or any other database supported by EF Core)
 
 ### Installation on Windows
+1. Install [Visual Studio Code](https://code.visualstudio.com/download)
 
+2. Install [Microsoft SQL Server](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
 
 
 ### Installation on Linux
