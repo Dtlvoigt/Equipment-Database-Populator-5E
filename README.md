@@ -17,6 +17,8 @@ This console app loads and organizes D&D 5th Edition equipment data into an SQL 
 
 2. Install [Microsoft SQL Server](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
 
+3. Clone the repository in VS Code:
+
 
 ### Installation on Linux
 1. Clone the repository:
