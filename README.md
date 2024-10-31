@@ -19,6 +19,12 @@ This console app loads and organizes D&D 5th Edition equipment data into an SQL 
 
 3. Clone the repository in VS Code:
 
+4. Set up a database in SSMS and get a connection string
+
+5. Update Appsettings.json with your connection string
+
+6. Run the program
+
 
 ### Installation on Linux
 1. Clone the repository:
