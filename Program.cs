@@ -38,7 +38,7 @@ namespace EquipmentDatabasePopulator5E
                     await LoadService(context);
                 }
 
-                //tests go here
+                //place tests here
                 var categories = await context.Categories.ToListAsync();
                 var equipment = await context.Equipment.Include(e => e.WeaponProperties).Include(e => e.PackContents).ToListAsync();
                 var weaponProperties = await context.WeaponProperties.ToListAsync();
