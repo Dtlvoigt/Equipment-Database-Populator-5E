@@ -39,14 +39,14 @@ namespace EquipmentDatabasePopulator5E
                 }
 
                 //place tests here
-                var categories = await context.Categories.ToListAsync();
-                var equipment = await context.Equipment.Include(e => e.WeaponProperties).Include(e => e.PackContents).ToListAsync();
-                var weaponProperties = await context.WeaponProperties.ToListAsync();
-                var pcRelationships = await context.PackContents.ToListAsync();
-                var wpRelationships = await context.EquipmentWeaponProperties.ToListAsync();
-                var weapons = await context.Equipment.Where(e => e.Category == "Weapon").Include(e => e.WeaponProperties).ToListAsync();
-                var variantItems = await context.Equipment.Where(e => e.HasVariant).ToListAsync();
-                var packsAndContents = await context.Equipment.Where(e => e.GearCategory == "Equipment Packs").Include(e => e.PackContents).ToListAsync();
+                // var categories = await context.Categories.ToListAsync();
+                // var equipment = await context.Equipment.Include(e => e.WeaponProperties).Include(e => e.PackContents).ToListAsync();
+                // var weaponProperties = await context.WeaponProperties.ToListAsync();
+                // var pcRelationships = await context.PackContents.ToListAsync();
+                // var wpRelationships = await context.EquipmentWeaponProperties.ToListAsync();
+                // var weapons = await context.Equipment.Where(e => e.Category == "Weapon").Include(e => e.WeaponProperties).ToListAsync();
+                // var variantItems = await context.Equipment.Where(e => e.HasVariant).ToListAsync();
+                // var packsAndContents = await context.Equipment.Where(e => e.GearCategory == "Equipment Packs").Include(e => e.PackContents).ToListAsync();
             }
         }
 
