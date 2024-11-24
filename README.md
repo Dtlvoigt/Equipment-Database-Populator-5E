@@ -2,7 +2,7 @@
 This console app loads and organizes D&D 5th Edition equipment data into an SQL database. It pulls item info from JSON files provided by the D&D 5E API, transforming it into a format that's easy to manage for other applications.
 
 ## Features
-- Parses equipment data from the [DND 5E API](https://www.dnd5eapi.co/)
+- Parses equipment data from the <a href="https://www.dnd5eapi.co/">DND 5E API</a>
 - Organizes data into a SQL database using Entity Framework Core
 - Handles nested data like magic item variants and weapon properties
 
